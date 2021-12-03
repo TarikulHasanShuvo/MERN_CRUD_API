@@ -1,10 +1,10 @@
 const expess = require('express')
 const  mongoose = require('mongoose')
-const todoHandler = require('./routeHandler/todoHandler')
+const todoHandler = require('./src/routeHandler/todoHandler')
 
 // app init
 const app = expess()
-// resonse return type
+// response return type
 app.use(expess.json())
 
 // db connect
