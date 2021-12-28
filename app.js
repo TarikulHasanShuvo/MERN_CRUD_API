@@ -1,14 +1,24 @@
 const expess = require('express')
 const  mongoose = require('mongoose')
-const todoHandler = require('./src/routeHandler/todoHandler')
+
+
+const routeModules = require('./routes/index');
 
 // app init
 const app = expess()
 // response return type
 app.use(expess.json())
 
+//All route define here
+
+routeModules(app);
+
+
+// set the view engine to ejs
+app.set('view engine', 'ejs');
+
 // db connect
-const url = 'mongodb://localhost/todos'
+const url = 'mongodb://localhost/MERN_API'
 mongoose.connect(url)
 .then(()=> console.log('db connection success'))
 .catch((err)=>console.log(err))
@@ -23,5 +33,4 @@ app.listen(PORT,()=>{
 })
 
 
-// This for todo CRUD oparetion.
-app.use('/todo',todoHandler);
+
