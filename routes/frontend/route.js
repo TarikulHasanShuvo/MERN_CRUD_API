@@ -16,7 +16,7 @@ router.use('/contact',(req,res)=>{
 });
 
 router.use('/',(req,res)=>{
-    Todo.find({status: 'active'}, (err, data) => {
+    Todo.find( (err, data) => {
         res.render('index',{todos : data})
     })
    

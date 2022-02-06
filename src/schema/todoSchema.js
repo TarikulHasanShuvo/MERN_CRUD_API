@@ -1,21 +1,21 @@
-const  mongoose = require('mongoose')
+const mongoose = require('mongoose')
 
 // This a Schema/Table Design/ Migration File
 const todoSchema = mongoose.Schema({
 
-    title : {
-        type : String,
-        required : true
+    title: {
+        type: String,
+        required: true
     },
-    description : String,
+    description: String,
     status: {
-        type : String,
-        enum : ['active','inactive']
+        type: String,
+        enum: ['active', 'inactive']
     },
 
-    date:{
-        type : Date,
-        default : Date.now
+    date: {
+        type: Date,
+        default: Date.now
     }
 
 })
