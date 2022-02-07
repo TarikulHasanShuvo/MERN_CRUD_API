@@ -1,5 +1,6 @@
 const expess = require('express')
 const  mongoose = require('mongoose')
+const cors = require("cors");
 
 
 const routeModules = require('./routes/index');
@@ -8,6 +9,7 @@ const routeModules = require('./routes/index');
 const app = expess()
 // response return type
 app.use(expess.json())
+app.use(cors());
 
 //All route define here
 
