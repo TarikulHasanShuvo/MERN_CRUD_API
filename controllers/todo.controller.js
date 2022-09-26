@@ -1,66 +1,63 @@
 const express = require('express');
 const router = express.Router();
-const mongoose = require('mongoose')
-const productSchema = require('../schema/productSchema')
-// Created a Product Model for product collection.
-const Product = new mongoose.model("Product", productSchema)
+const Todo = require('../models/todo.model');
 
 
-//get all Product
+//get all todos
 router.get('/', async (req, res) => {
-    Product.find((err, data) => {
+    Todo.find({status: 'active'}, (err, data) => {
         if (err) {
             res.status(500).json({message: 'There was a server error', error: err})
         } else {
             res.status(200).json({
                 result: data,
-                message: 'Products get successfully.'
+                message: 'Todo get successfully.'
             })
         }
     })
 })
 
-//get one Product
+//get one todos
 router.get('/:id', async (req, res) => {
-    Product.findOne({_id: req.params.id}, (err, data) => {
+    Todo.findOne({_id: req.params.id}, (err, data) => {
         if (err) {
             res.status(500).json({message: 'There was a server error', error: err})
         } else {
             res.status(200).json({
                 result: data,
-                message: 'Product get successfully.'
+                message: 'Todo get successfully.'
             })
         }
     })
 })
 
-//save one Product
+//save one todos
 router.post('/', async (req, res) => {
-    const newProduct = new Product(req.body);
-    await newProduct.save(err => {
+    const newTodo = new Todo(req.body);
+    await newTodo.save(err => {
         if (err) {
-            res.status(500).json({message: 'There was a server errors', error: err})
+            res.status(500).json({message: 'There was a server error', error: err})
         } else {
-            res.status(200).json({message: 'Product saved successfully.'})
+            res.status(200).json({message: 'Todo saved successfully.'})
         }
     })
 })
 
-//save multiple Product
+//save multiple todos
 router.post('/all', async (req, res) => {
 
-    await Product.insertMany(req.body, err => {
+    await Todo.insertMany(req.body, err => {
         if (err) {
             res.status(500).json({message: 'There was a server error', error: err})
         } else {
-            res.status(200).json({message: 'Products were saved successfully.'})
+            res.status(200).json({message: 'Todos were saved successfully.'})
         }
     })
 })
 
-//update one Product
+//update one todos
 router.put('/:id', async (req, res) => {
-    await Product.updateOne({
+    await Todo.updateOne({
             _id: req.params.id
         },
         {
@@ -75,7 +72,7 @@ router.put('/:id', async (req, res) => {
             if (err) {
                 res.status(500).json({message: 'There was a server error', error: err})
             } else {
-                res.status(200).json({message: 'Product updated successfully.'})
+                res.status(200).json({message: 'Todos updated successfully.'})
             }
         }
     ).clone().catch(function (err) {
@@ -83,13 +80,13 @@ router.put('/:id', async (req, res) => {
     })
 })
 
-//delete one Product
+//delete one todos
 router.delete('/:id', async (req, res) => {
-    await Product.deleteOne({_id: req.params.id}, err => {
+    await Todo.deleteOne({_id: req.params.id}, err => {
         if (err) {
             res.status(500).json({message: 'There was a server error', error: err})
         } else {
-            res.status(200).json({message: 'Product Deleted successfully.'})
+            res.status(200).json({message: 'Todo Deleted successfully.'})
         }
     })
 })

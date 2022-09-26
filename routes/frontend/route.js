@@ -1,10 +1,7 @@
-const mongoose = require('mongoose')
-const todoSchema = require('../../src/schema/todoSchema')
-// Created a Todo Model for todo collection.
-const Todo = new mongoose.model("Todo", todoSchema)
-const expess = require('express')
+const Todo = require('../../models/todo.model')
+const express = require('express')
 
-const router = expess.Router();
+const router = express.Router();
 
 
 router.use('/about',(req,res)=>{
@@ -19,7 +16,7 @@ router.use('/',(req,res)=>{
     Todo.find( (err, data) => {
         res.render('index',{todos : data})
     })
-   
+
 });
 
 

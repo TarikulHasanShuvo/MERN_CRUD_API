@@ -1,15 +1,20 @@
-const expess = require('express')
-const todoHandler = require('../../src/routeHandler/todoHandler')
-const productHandler = require('../../src/routeHandler/productHandler')
+const express = require('express')
+const userController = require('../../controllers/user.controller')
+const todoController = require('../../controllers/todo.controller')
+const productController = require('../../controllers/product.controller')
+const authGuard = require("../../middlewares/auth.jwt");
 
-const router = expess.Router();
+const router = express.Router();
 
+// This for User CRUD operation.
+router.use('/user',userController);
 
 // This for todo CRUD operation.
- router.use('/todo',todoHandler);
+ router.use('/todo',authGuard,todoController);
+
 
 // This for product CRUD operation.
-router.use('/product',productHandler);
+router.use('/product',productController);
 
 
 module.exports = router;
