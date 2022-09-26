@@ -16,7 +16,7 @@ router.post('/register', async (req, res) => {
             });
         } else {
             user.password = undefined;
-            return res.status(200).send({
+            return res.json({
                 user: res.json(user),
                 message: 'User registered successfully.',
                 status: 200
@@ -33,18 +33,19 @@ router.post('/login', async (req, res) => {
         if (err) throw err;
         if (!user) {
             res.status(401).json({message: 'Authentication failed. User not found.'});
-        }
-        else if (user) {
+        } else if (user) {
             if (!user.comparePassword(req.body.password)) {
                 res.status(401).json({message: 'Authentication failed. Wrong password.'});
-            }
-            else {
-                return res.json({token: jwt.sign({email: user.email, name: user.name, _id: user._id}, jwtSecret)});
+            } else {
+                user.password = undefined;
+                return res.json({
+                    token: jwt.sign({email: user.email, name: user.name, _id: user._id}, jwtSecret),
+                    user
+                });
             }
         }
     });
 })
-
 
 
 module.exports = router;
